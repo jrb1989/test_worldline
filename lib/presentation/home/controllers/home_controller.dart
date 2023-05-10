@@ -12,31 +12,39 @@ class HomeController extends GetxController {
   HomeController(this._repo);
 
   @override
-  void onInit() {
-    super.onInit();
-    poisList.value = [];
-  }
-
-  @override
+  ///This function is executed when the widget tree has been loaded.
   void onReady() async {
+    super.onReady();
     getPois();
   }
 
   void getPois({bool forceLocal = false}) async {
+    //we change the loading status so that the user can see that data is being loaded
     loading = true.obs;
+
+    // request to the repository to get data
     final requestPois = await _repo.getPois(forceLocal: forceLocal);
 
+    // clean list in case it has previous data
     poisList.clear();
 
     requestPois.fold(
-        (value) => print("error"), (value) => {poisList.addAll(value!)});
+        (value) => print("error"), // show error to load data
+        (value) => {poisList.addAll(value!)} ); // add data to the list
+
+    // another list for backup we will need it for the data filterItems()
     savedPoisList.addAll(poisList);
+
+    //update loading status data been loaded or error
     loading = false.obs;
+
+    // update view
     update();
   }
 
   void deleteList() {
     loading = true.obs;
+    //simply clean the list and update the view
     poisList.clear();
     loading = false.obs;
     update();
@@ -48,9 +56,10 @@ class HomeController extends GetxController {
     final String query = searchText.toLowerCase();
 
     poisList.clear();
+   //  we get the original list to filter again
     poisList.addAll(savedPoisList);
 
-    if(searchText.isNotEmpty){
+    if (searchText.isNotEmpty) {
       // Filter the items based on the title field
       final List<PoiDomainModel> filteredList = poisList.where((item) {
         final String title = item.title.toLowerCase();
@@ -60,6 +69,7 @@ class HomeController extends GetxController {
       poisList.addAll(filteredList);
     }
 
+    // update the view
     loading = false.obs;
     update();
   }
