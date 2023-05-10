@@ -7,8 +7,4 @@ class DetailPoiController extends GetxController {
 
   DetailPoiController(this.poi);
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
 }

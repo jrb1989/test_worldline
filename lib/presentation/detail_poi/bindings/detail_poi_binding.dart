@@ -8,6 +8,7 @@ class DetailPoiBinding extends Bindings {
   void dependencies() {
     final args = Get.arguments;
 
+    //we get the data passed through the routing and pass it to the view controller
     final poi = PoiDomainModel(
         id: args['id'],
         title: args['title'],
