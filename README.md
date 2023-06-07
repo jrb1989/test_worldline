@@ -14,4 +14,4 @@ This project is a starting point for a Flutter application.
 ### Possible improvements: 
 - Add a more scalable error management and add an error logging platform such as Datadog or Crashlytics,
 - Adding widget testing and unit testing
-- Implement the different environments 
+- Implement the different environments with flavors 
